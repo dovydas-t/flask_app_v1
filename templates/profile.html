@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+    {% block title %} SoundSwipe {% endblock %}
+    {% block content %}
+        <h2>Your Profile</h2>
+        <h2>Welcome back, {{current_user.username}}</h2>
+        <p>Email: {{ current_user.email }}</p>
+        <p>Joined on: {{ current_user.date_joined }}</p>
+
+        <h3>Your Posts</h3>
+        <ul class="posts-list">
+            {% for post in current_user.posts %}
+                <li>
+                    <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+                    <p>Posted on {{ post.date_posted }}</p>
+                </li>
+            {% endfor %}
+    {% endblock %}

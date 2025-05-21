@@ -1,6 +1,41 @@
-{% extends "base.html" %} {% block title %} SoundSwipe {% endblock %} {% block
-content %}
-<h2>Welcome to SoundSwipe, {{session.username}}</h2>
-<a href="{{ url_for('login') }}" class="button">Login</a>
-<a href="{{ url_for('register') }}" class="button">Register</a>
+{% extends "base.html" %}
+{% block title %} SoundSwipe {% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Welcome to SoundSwipe</h1>
+  <p class="lead text-center">
+    Your gateway to an endless world of music. Discover new artists, build playlists, and enjoy podcasts—all in one place.
+  </p>
+
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Browse Music</h5>
+          <p class="card-text">Explore songs by genre, mood, or artist. Find your next favorite track here.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Create Playlists</h5>
+          <p class="card-text">Build and manage custom playlists to match your vibe any time of day.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Podcasts</h5>
+          <p class="card-text">Tune in to the latest podcasts from creators around the globe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

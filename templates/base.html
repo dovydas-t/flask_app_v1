@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}SoundSwipe{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   </head>
-
-  <div>
-    {% with messages = get_flashed_messages(with_categories = True) %} {% if
-      messages %} {% for category, message in messages%}
-        <div class="flash-{{category}}">{{message}}</div>
-      {% endfor %} {% endif %} {% endwith %}
-  </div>
 
   <body>
     <header>
-      <h1>
-        <a href="{{ url_for('index') }}">
+      <div class="header-logo-and-menu-nav-box">
+        <a class="header-logo"
+          href="{{ url_for('index') }}">
           <img
             src="{{ url_for('static', filename='logo.png') }}"
             alt="SoundSwipe Logo"
-            class="header-logo"
-          /></a>
-      </h1>
-      <nav>
-        <a href="{{ url_for('login') }}">Login</a> |
-        <a href="{{ url_for('register') }}">Register</a>
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('logout') }}">Logout</a>
-        <a href="{{ url_for('system') }}">System</a> | {% if session.username %}
-          <span class="welcome-message"> Welcome, {{ session.username }}</span>
-        {% endif %}
+          />
+        </a>
+
+        <nav class="authenticate-nav">
+          {% if current_user.is_authenticated %}
+            <p>Hello, {{ current_user.username }}!</p>
+            <a href="{{ url_for('profile') }}">Profile</a> |
+            <a href="{{ url_for('logout') }}">Logout</a>
+          {% else %}
+            <p>Hello, Guest!</p>
+            <a href="{{ url_for('login') }}">Login</a> |
+            <a href="{{ url_for('register') }}">Register</a>
+          {% endif %}
+        </nav>
+      </div>
+
+      <nav class="website-nav">
+        <a class="website-nav-items"
+          class="{% if active == 'index' %}active{% endif %}"
+          href="{{ url_for('index') }}">Home</a>
+        <a class="website-nav-items"
+          class="{% if active == 'posts' %}active{% endif %}"
+          href="{{ url_for('profile') }}">Posts</a>
       </nav>
+
+      <div class="flashed-messages">
+        {% with messages = get_flashed_messages(with_categories = True) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-{{category}}">{{message}}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+
+
     </header>
 
-    <main>{% block content %}{% endblock %}</main>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
 
     <footer>
       <p>&copy; 2025 Hello</p>
