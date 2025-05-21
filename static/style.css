@@ -1,0 +1,14 @@
+.flash-error {
+  color: red;
+}
+.flash-success {
+  color: green;
+}
+.flash-info {
+  color: blue;
+}
+
+.header-logo {
+  width: 100px;
+  height: auto;
+}

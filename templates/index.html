@@ -1,0 +1,6 @@
+{% extends "base.html" %} {% block title %} SoundSwipe {% endblock %} {% block
+content %}
+<h2>Welcome to SoundSwipe, {{session.username}}</h2>
+<a href="{{ url_for('login') }}" class="button">Login</a>
+<a href="{{ url_for('register') }}" class="button">Register</a>
+{% endblock %}
