@@ -1,17 +1,46 @@
 {% extends "base.html" %}
     {% block title %} SoundSwipe {% endblock %}
     {% block content %}
-        <h2>Your Profile</h2>
-        <h2>Welcome back, {{current_user.username}}</h2>
-        <p>Email: {{ current_user.email }}</p>
-        <p>Joined on: {{ current_user.date_joined }}</p>
+        <h1>Welcome back, {{ current_user.username }}</h1>
+            <h2>Your Profile</h2>
+                <p>Full Name: {{ current_user.profile.name or "Not set" }}</p>
+                <p>Email: {{ current_user.profile.email or "Not set" }}</p>
+                <p>Birth Date: {{ current_user.profile.birth_date.strftime('%Y-%m-%d') if current_user.profile.birth_date else "Not set" }}</p>
+                <p>Registration Date: {{ current_user.profile.created_at.strftime('%Y-%m-%d') }}</p>
+                <a href="{{ url_for('profile_update') }}" class="btn btn-primary">Edit Profile</a>
 
-        <h3>Your Posts</h3>
-        <ul class="posts-list">
-            {% for post in current_user.posts %}
-                <li>
-                    <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
-                    <p>Posted on {{ post.date_posted }}</p>
-                </li>
-            {% endfor %}
+            <h3>Your Posts</h3>
+                <ul class="posts-navigation">
+                    <li clss="profile-posts-nav">
+                        <a href="{{ url_for('new_post') }}">New Post</a>
+                    </li>
+                </ul>
+                <ul class="posts-list">
+                    {% for post in current_user.posts %}
+                        <li>
+                            <h2>{{ post.title }}</h2>
+                            <p>Posted on {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+                        </li>
+                    {% else %}
+                        <li>You have no posts yet.</li>
+                    {% endfor %}
+                </ul>
+
+<!-- Add new post button -->
+<button id="add-post-btn">Add New Post</button>
+
+<!-- This is where new_post.html will be loaded -->
+<div id="new-post-container"></div>
+
+<!-- Include jQuery or use plain JS -->
+<script>
+    document.getElementById('add-post-btn').addEventListener('click', function () {
+        fetch('{{ url_for("new_post") }}')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('new-post-container').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading form:', error));
+    });
+</script>
     {% endblock %}

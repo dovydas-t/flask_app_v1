@@ -579,3 +579,122 @@ input[type="button"]:active {
   background-color: var(--primary-color);
   border-radius: 3px 3px 0 0;
 }
+
+
+/* Registration & Login Form Styles */
+.registration_box,
+.login_box {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--alt-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.registration_box form,
+.login_box form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.username_field,
+.password_field,
+.login_box form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.username_field label,
+.password_field label,
+.login_box form label {
+  color: var(--primary-text);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.username_field input,
+.password_field input,
+.login_box form input[type="text"],
+.login_box form input[type="password"] {
+  padding: 0.75rem;
+  background-color: var(--base-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--primary-text);
+  font-size: 1rem;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.username_field input:focus,
+.password_field input:focus,
+.login_box form input[type="text"]:focus,
+.login_box form input[type="password"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(26, 95, 180, 0.2);
+}
+
+.username_field input:hover,
+.password_field input:hover,
+.login_box form input[type="text"]:hover,
+.login_box form input[type="password"]:hover {
+  border-color: var(--secondary-text);
+}
+
+/* Error styling */
+.username_field span,
+.password_field span,
+.login_box form span {
+  color: var(--error-color) !important;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* Submit button */
+form div:last-child,
+.login_box form input[type="submit"] {
+  margin-top: 1rem;
+}
+
+form input[type="submit"],
+.login_box form input[type="submit"] {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+form input[type="submit"]:hover,
+.login_box form input[type="submit"]:hover {
+  background-color: #1456a0;
+  transform: translateY(-1px);
+}
+
+form input[type="submit"]:active,
+.login_box form input[type="submit"]:active {
+  transform: translateY(0);
+}
+
+form input[type="submit"]:focus,
+.login_box form input[type="submit"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(26, 95, 180, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .registration_box,
+  .login_box {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}

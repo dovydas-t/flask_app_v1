@@ -5,7 +5,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for, ses
 from flask_sqlalchemy import SQLAlchemy
 from config import database_url
 from flask_migrate import Migrate
-from forms import LoginForm, RegisterForm, RegisterDetailsForm
+from forms import LoginForm, RegisterForm, ProfileDetailsForm, PostForm
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 
@@ -80,12 +80,7 @@ def register():
         new_user = AuthUser(username=username, password_hash=hashed_password)
         user_profile = UserProfile(name=None, email=None, birth_date=None)
 
-        #FIXME: Maybe needs to be changed to user_profile = UserProfile()
         new_user.profile = user_profile
-        #user_profile = UserProfile(id=new_user.id, name=None, email=None, birth_date=None)
-        #db.session.add(user_profile)
-        #db.session.commit()
-
         db.session.add(new_user)
         db.session.commit()
         flash(f"Account created for {new_user.username}!", "success")
@@ -121,6 +116,22 @@ def profile():
     else:
         flash("User not logged in", "error")
         return redirect(url_for('index'))
+    
+@app.route('/profile/update', methods=['GET', 'POST'])
+@login_required
+def profile_update():
+    form = ProfileDetailsForm()
+    if request.method == 'POST':
+        current_user.username = form.username.data
+        current_user.profile.name = form.name.data
+        current_user.profile.email = form.email.data
+        current_user.profile.birth_date = form.birth_date.data
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))
+
+
+    return render_template("profile_update.html", form=form)
 
 @app.route('/logout')
 @login_required
@@ -129,6 +140,26 @@ def logout():
     flash("User logged out", "success")
     return redirect(url_for('index'))
 
+@app.route('/posts')
+def posts():
+    return render_template("posts.html")
+
+@app.route('/new_post', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    pass
+#     form = PostForm()
+#     if form.validate_on_submit():
+#         post = Post(
+#             title=form.title.data,
+#             content=form.content.data,
+#             user_id=current_user.id
+#         )
+#         db.session.add(post)
+#         db.session.commit()
+#         flash('Post created successfully!', 'success')
+#         return redirect(url_for('profile'))
+#     return render_template('new_post.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)

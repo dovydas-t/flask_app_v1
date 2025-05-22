@@ -1,56 +1,43 @@
-{% extends "base.html" %} {% block title %} Register {% endblock %} {% block
-content %}
-<form action="/register" method="POST">
-  {{ form.hidden_tag() }}
+{% extends "base.html" %}
+{% block title %} Update Profile {% endblock %}
+{% block content %}
+    <form action="/profile/update" method="POST">
+        {{ form.hidden_tag() }}
 
-  <div>
-    {{ form.username.label }}<br />
-    {{ form.username(size=32) }}<br />
-    {% if form.username.errors %} {% for error in form.username.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %} {% endif %}
-  </div>
+        <div>
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control", value=current_user.username ) }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+        </div>
 
-  <div>
-    {{ form.password.label }}<br />
-    {{ form.password(size=32) }}<br />
-    {% for error in form.password.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <div>
+            {{ form.name.label(class="form-label") }}<br />
+            {{ form.name(class="form-control", value=current_user.profile.name ) }}<br />
+            {% for error in form.name.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+        </div>
 
-  <div>
-    {{ form.name.label }}<br />
-    {{ form.name(size=32) }}<br />
-    {% for error in form.name.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <div>
+            {{ form.email.label(class="form-label") }}<br />
+            {{ form.email(class="form-control", value=current_user.profile.email ) }}<br />
+            {% for error in form.email.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+        </div>
 
-  <div>
-    {{ form.email.label }}<br />
-    {{ form.email(size=32) }}<br />
-    {% for error in form.email.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <div>
+            {{ form.birth_date.label(class="form-label") }}<br />
+            {{ form.birth_date(class="form-control", value=current_user.profile.birth_date ) }}<br />
+            {% for error in form.birth_date.errors %}
+            <span style="color: red">[{{ error }}]</span>
+            {% endfor %}
+        </div>
 
-  <div>
-    {{ form.birth_date.label }}<br />
-    {{ form.birth_date(size=32) }}<br />
-    {% for error in form.birth_date.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </div>
-
-  <div>
-    {{ form.vin.label }}<br />
-    {{ form.vin(size=32) }}<br />
-    {% for error in form.vin.errors %}
-      <span style="color: red">[{{ error }}]</span>
-    {% endfor %}
-  </div>
-
-  <div>{{ form.submit() }}</div>
-</form>
+        <div>{{ form.submit() }}</div>
+    </form>
 {% endblock %}
